@@ -5,7 +5,7 @@
   "main": "part9.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "http-server"
+    "start": "http-server"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Spencer0/sonicer/issues"
   },
-  "homepage": "https://github.com/Spencer0/sonicer#readme"
+  "homepage": "https://github.com/Spencer0/sonicer#readme",
+  "dependencies": {
+    "http-server": "^0.12.0"
+  }
 }
