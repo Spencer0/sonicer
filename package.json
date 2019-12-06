@@ -1,0 +1,19 @@
+{
+  "name": "phaser2",
+  "version": "1.0.0",
+  "description": "My Phaser Attemtp",
+  "main": "part9.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spencer0/sonicer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Spencer0/sonicer/issues"
+  },
+  "homepage": "https://github.com/Spencer0/sonicer#readme"
+}
