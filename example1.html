@@ -1,0 +1,83 @@
+<
+<head> 
+    <meta charset="UTF-8" />
+    <title>Random Sprite Guy</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head> 
+<body translate="no" style="overflow: hidden;">
+<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.0.4/phaser.min.js"></script>
+<script id="rendered-js">
+      var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+
+var sprite;
+
+function preload() {
+
+  // 37x45 is the size of each frame
+  // There are 18 frames in the PNG - you can leave this value blank if the frames fill up the entire PNG, but in this case there are some
+  // blank frames at the end, so we tell the loader how many to load
+  game.load.spritesheet('ms', '//examples.phaser.io/assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
+
+}
+
+function create() {
+
+  var dudeData = [
+        '.......3.....',
+        '......333....',
+        '....5343335..',
+        '...332333333.',
+        '..33333333333',
+        '..37773337773',
+        '..38587778583',
+        '..38588888583',
+        '..37888888873',
+        '...333333333.',
+        '.F....5556...',
+        '3E34.6757.6..',
+        '.E.55.666.5..',
+        '......777.5..',
+        '.....6..7....',
+        '.....7..7....'
+    ];
+
+  //game.create.texture('phaserDude', dudeData, 4, 4, 0);
+
+  sprite = game.add.sprite(40, 100, 'ms');
+
+  sprite.animations.add('walk');
+
+  sprite.animations.play('walk', 50, true);
+
+  game.add.tween(sprite).
+  to({ x: game.width }, 5000, Phaser.Easing.Cubic.In, true, 0, Number.MAX_VALUE);
+
+}
+
+// update isn't called until 'create' has completed. If you need to process stuff before that point (i.e. while the preload is still happening)
+// then create a function called loadUpdate() and use that
+function update() {
+
+  if (sprite.x >= 300)
+  {
+    sprite.scale.x += 0.01;
+    sprite.scale.y += 0.01;
+  } else
+
+  {
+    sprite.scale.x = 1;
+    sprite.scale.y = 1;
+  }
+
+}
+      //# sourceURL=pen.js
+    </script>
+
+</body>

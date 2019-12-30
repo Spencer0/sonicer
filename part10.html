@@ -3,7 +3,7 @@
 <head> 
     <meta charset="UTF-8" />
     <title>Making your first Phaser 3 Game - Part 10</title>
-	<script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.21.0/phaser.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -15,7 +15,7 @@
 <script type="text/javascript">
 
 var config = {
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS,
     width: 800,
     height: 600,
     physics: {
@@ -36,6 +36,7 @@ var player;
 var stars;
 var bombs;
 var platforms;
+var tilesprite;
 var cursors;
 var score = 0;
 var gameOver = false;
@@ -45,17 +46,20 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('sky', 'assets/sky.png');
+    this.load.image('sky', 'assets/tilesprite.jpg');
     this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/winchester.png', { frameWidth: 48, frameHeight: 48 });
+    this.load.tilemapTiledJSON('map', 'assets/tilemaps/maps/features_test.json', null, Phaser.Tilemaps.TILED_JSON);
 }
 
 function create ()
 {
     //  A simple background for our game
-    this.add.image(400, 300, 'sky');
+    tilesprite = this.add.tileSprite(400,300, 800, 600, 'sky')
+
+    console.log(this)
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
@@ -75,7 +79,7 @@ function create ()
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
-
+    
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
         key: 'left',
@@ -140,13 +144,13 @@ function update ()
     if (cursors.left.isDown)
     {
         player.setVelocityX(-160);
-
+        tilesprite.x -= 4;
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
     {
         player.setVelocityX(160);
-
+        tilesprite.x += 3;
         player.anims.play('right', true);
     }
     else

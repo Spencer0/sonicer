@@ -2,7 +2,7 @@
 <html lang="en"> 
 <head> 
     <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Part 6</title>
+    <title>Random Sprite</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <style type="text/css">
         body {
@@ -14,9 +14,9 @@
 
 <script type="text/javascript">
 
-    var config = {
+var config = {
         type: Phaser.AUTO,
-        width: 800,
+        width: 1400,
         height: 600,
         physics: {
             default: 'arcade',
@@ -26,70 +26,141 @@
             }
         },
         scene: {
-            preload: preload,
             create: create,
             update: update
         }
     };
 
-    var player;
-    var platforms;
+var game = new Phaser.Game(config);
+var exampleGuy  = ['........3....',
+                    '......333....',
+                    '....5343335..',
+                    '...332333333.',
+                    '..7777777777.',
+                    '..37773337773',
+                    '..38587778583',
+                    '..38588888583',
+                    '..37888888873',
+                    '...333333333.',
+                    '.F....5556...',
+                    '3E34.6757.6..',
+                    '.E.55.666.5..',
+                    '......777.5..',
+                    '.....6..7....',
+                    '.....7..7....' ]
+function create ()
+{
+    var dudeData = [
+        '..7777777777.',
+        '......333....',
+        '....5343335..',
+        '...332333333.',
+        '..7777777777.',
+        '..37773337773',
+        '..38587778583',
+        '..38588888583',
+        '..37888888873',
+        '...333333333.',
+        '.F....5556...',
+        '3E34.6757.6..',
+        '.E.55.666.5..',
+        '......777.5..',
+        '.....6..7....',
+        '.....7..7....'
+    ];
+    var white = [
+        '..22222222222',
+        '..22222222222',
+        '..22222222222',
+        '..22222222222',
+    ];
+    var sky = [
+        '..37773337773',
+        '..38587778583',
+        '..38588888583',
+        '..37888888873',
+    ];
 
-    var game = new Phaser.Game(config);
+    this.textures.generate('dude', { data: createRandomDude(), pixelWidth: 5, pixelHeight: 5 });
+    this.textures.generate('sky', { data: sky, pixelWidth: 40, pixelHeight: 40 });
+    this.textures.generate('white', { data: white, pixelWidth: 300, pixelHeight: 300 });
+    //this.add.image(400, 300, 'white');
+    this.add.image(400, 300, 'sky');
+    console.log(this)
+    player = this.physics.add.sprite(100, 450, 'dude');
+    player.setCollideWorldBounds(true);
+}
 
-    function preload ()
+function launch (i)
+{
+    var image = this.add.image(48 + i * 64, 32, 'dude');
+}
+
+function update (){
     {
-        this.load.image('sky', 'assets/sky.png');
-        this.load.image('ground', 'assets/platform.png');
-        this.load.image('star', 'assets/star.png');
-        this.load.image('bomb', 'assets/bomb.png');
-        this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+        var cursors = this.input.keyboard.createCursorKeys();
+        if (cursors.left.isDown)
+        {
+            player.setVelocityX(-160);
+
+        }
+        else if (cursors.right.isDown)
+        {
+            player.setVelocityX(160);
+
+        } 
+        else
+        {
+            player.setVelocityX(0);
+
+        }
     }
+}
 
-    function create ()
-    {
-        this.add.image(400, 300, 'sky');
 
-        platforms = this.physics.add.staticGroup();
+function createRandomDude(){
 
-        platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-
-        platforms.create(600, 400, 'ground');
-        platforms.create(50, 250, 'ground');
-        platforms.create(750, 220, 'ground');
-
-        player = this.physics.add.sprite(100, 450, 'dude');
-
-        player.setBounce(0.2);
-        player.setCollideWorldBounds(true);
-
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'turn',
-            frames: [ { key: 'dude', frame: 4 } ],
-            frameRate: 20
-        });
-
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.physics.add.collider(player, platforms);
+//Lets generate 15 random strings of 0-9 and A B C D E F length 13
+   
+    var bookOfStrings = []
+    for(let i = 0; i < 15; i++){
+        let charArray = [];
+        for(let j = 0; j < 13; j++){
+            charArray.push(chooseCharacter(i, j));
+        }
+        var str = charArray.join("");
+        bookOfStrings.push(str)
     }
+    console.log(bookOfStrings)
+    return bookOfStrings
+   
+}
 
-    function update ()
-    {
+function chooseCharacter( row,  col){
+    var skincolorWhite = 2
+    var skincolorYellow = 8
+    var skincolorDarkBlack = 6
+
+    var hatColorBlack = "f"
+    var hatColorBlack = 9
+    var hatColorRed = 3
+
+    var Grey = 1
+
+    if((exampleGuy[row][col] == ".")){
+        return "."
     }
-
+    if((exampleGuy[row][col] == "5")){
+        return "5"
+    }
+    if((exampleGuy[row][col] == "8")){
+        return 8
+    }
+    if((exampleGuy[row][col] == "3")){
+        return 3
+    }
+    return exampleGuy[row][col]
+}
 </script>
 
 </body>
